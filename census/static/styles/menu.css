@@ -141,7 +141,7 @@ header nav ul li .slide_icon{
     .menu_bar .b_menu{
 
         display: block;
-        padding: 20px;
+        padding: 20px 20px 20px 20px;
         color: #EBE3D5;
         overflow: hidden;
         font-size: 25px;
