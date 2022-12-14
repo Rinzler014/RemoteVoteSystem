@@ -1,4 +1,4 @@
-{% extends "layouts/base.html"%}
+{% extends "layouts/header.html"%}
 
 {% block content %}
 
@@ -20,7 +20,20 @@
 
         <title>EMPADRONAMIENTO</title>
 
-        <h1>Empadronamiento de Usuarios</h1>
+        <h1>Bienvenido de Nuevo {{user.first_name}}</h1>
+
+        <form method="POST">
+
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button>Guardar</button>
+
+        </form>
+
+        <button type="button">
+            <a href="{% url 'logout' %}">Cerrar Sesion</a>
+        </button>
         
     </body>
     </html>

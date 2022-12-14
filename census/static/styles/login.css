@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "Oxygen";
+    src: url("../assets/Fonts/Oxygen-Regular.ttf");
+}
+
+
+.title {
+    margin: 50px 0 50px 0;
+    font-size: 50px;
+}
+
+.login-form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.username-label {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.password-label {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
