@@ -22,7 +22,7 @@ class Empadronamiento(forms.Form):
                             required = True, 
                             label = "CIC", 
                             widget = forms.TextInput(attrs = {
-                                "class": "form-text-field"
+                                "class": "form-control"
                                 }
                             ))
 
@@ -30,7 +30,7 @@ class Empadronamiento(forms.Form):
                             required = True, 
                             label = "CURP",
                             widget = forms.TextInput(attrs = {
-                                "class": "form-text-field"
+                                "class": "form-control"
                                 }
                             ))
 
@@ -38,7 +38,7 @@ class Empadronamiento(forms.Form):
                             required = True, 
                             label = "Nombre(s)",
                             widget = forms.TextInput(attrs = {
-                                "class": "form-text-field"
+                                "class": "form-control"
                                 }
                             ))
 
@@ -46,7 +46,7 @@ class Empadronamiento(forms.Form):
                                 required = True, 
                                 label = "Apellido Paterno",
                                 widget = forms.TextInput(attrs = {
-                                    "class": "form-text-field"
+                                    "class": "form-control"
                                     }
                                 ))
 
@@ -54,7 +54,7 @@ class Empadronamiento(forms.Form):
                                     required = True, 
                                     label = "Apellido Materno",
                                     widget = forms.TextInput(attrs = {
-                                        "class": "form-text-field"
+                                        "class": "form-control"
                                         }
                                     ))
                                     
@@ -77,7 +77,7 @@ class Empadronamiento(forms.Form):
                                     required = True, 
                                     label = "Numero Telefonico",
                                     widget = forms.TextInput(attrs = {
-                                            "class": "form-text-field"
+                                            "class": "form-control"
                                         }
                                     ))
 
@@ -85,7 +85,7 @@ class Empadronamiento(forms.Form):
                                         required = True, 
                                         label = "Codigo Postal",
                                         widget = forms.TextInput(attrs = {
-                                            "class": "form-text-field"
+                                            "class": "form-control"
                                             }
                                         ))
 
@@ -125,7 +125,7 @@ class Empadronamiento(forms.Form):
                                 required = True, 
                                 label = "Respuesta a Pregunta de Seguridad 1",
                                 widget = forms.TextInput(attrs = {
-                                    "class": "form-text-field"
+                                    "class": "form-control"
                                     }
                                 ))
 
@@ -141,7 +141,7 @@ class Empadronamiento(forms.Form):
                                 required = True, 
                                 label = "Respuesta a Pregunta de Seguridad 2",
                                 widget = forms.TextInput(attrs = {
-                                    "class": "form-text-field"
+                                    "class": "form-control"
                                     }
                                 ))
 
@@ -157,7 +157,7 @@ class Empadronamiento(forms.Form):
                                 required = True, 
                                 label = "Respuesta a Pregunta de Seguridad 3",
                                 widget = forms.TextInput(attrs = {
-                                    "class": "form-text-field"
+                                    "class": "form-control"
                                     }
                                 ))
 

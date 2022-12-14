@@ -1,5 +1,7 @@
 {% extends "layouts/header.html"%}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
     {% load static %}
@@ -25,9 +27,9 @@
         <form method="POST">
 
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form|crispy }}
 
-            <button>Guardar</button>
+            <button class="btn btn-primary">Guardar</button>
 
         </form>
 
