@@ -16,6 +16,9 @@ class LoginForm(AuthenticationForm):
                 "placeholder": "Contraseña"
             })
 
+class DateInput(forms.DateInput):
+    input_type = "date"
+
 class Empadronamiento(forms.Form):
     
     cic = forms.CharField(  max_length = 9, 
@@ -58,13 +61,15 @@ class Empadronamiento(forms.Form):
                                         }
                                     ))
                                     
-    birthDate = forms.CharField(    max_length = 10, 
-                                    required = True, 
+    birthDate = forms.DateField(   
+                                    required = True,
                                     label = "Fecha de Nacimiento",
-                                    widget = forms.TextInput(attrs = {
-                                        "class": "form-date-field"
-                                        }
-                                    ))
+                                    widget=forms.DateInput(attrs={
+                                        "class" : "form-control",
+                                        "type": "date"
+                                    })
+                                    )
+                                    
 
     email = forms.EmailField(   required = True, 
                                 label = "Correo Electronico",
@@ -97,13 +102,13 @@ class Empadronamiento(forms.Form):
                                     }
                                 ))
 
-    estate = forms.ModelChoiceField( required = True, 
-                                label = "Estado",
-                                queryset = Locations.objects.all(),
-                                widget = forms.Select(attrs = {
-                                    "class": "form-list-field"
-                                    }
-                                ))
+    state = forms.ModelChoiceField( required = True, 
+                                    label = "Estado",
+                                    queryset = Locations.objects.all(),
+                                    widget = forms.Select(attrs = {
+                                        "class": "form-list-field"
+                                        }
+                                    ))
 
     gender = forms.ChoiceField( required = True,
                                 label = "Genero",

@@ -25,7 +25,7 @@ def empadron(request):
 
         if empadron_form.is_valid():
             print("FORM VALID!")
-            print(empadron_form.cleaned_data)
+            print(empadron_form.cleaned_data["state"])
             return redirect("empadron")
         
     
