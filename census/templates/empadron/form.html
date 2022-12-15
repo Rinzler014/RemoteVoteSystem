@@ -24,7 +24,7 @@
 
         <h1>Bienvenido de Nuevo {{user.first_name}}</h1>
 
-        <form method="POST">
+        <form method="POST" id="reg_form">
 
             {% csrf_token %}
             {{ form|crispy }}

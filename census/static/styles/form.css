@@ -1,7 +1,15 @@
-#id_cic, #id_curp, #id_name, #id_name, #id_lastName, #id_momLastName, #id_birthDate,
+/* #id_cic, #id_curp, #id_name, #id_name, #id_lastName, #id_momLastName, #id_birthDate,
 #id_email, #id_phoneNumber, #id_postalCode, #id_town, #id_state, #id_gender, #id_secQuestion1,
 #id_secQuestion1, #id_secAns1, #id_secQuestion2, #id_secAns2, #id_secQuestion3, #id_secAns3 {
-    width: 50%;
+    width: 200%;
+
+} */
+
+#reg_form{
+    display: table;
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  width: 50%;
 }
 
 
