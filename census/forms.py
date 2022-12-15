@@ -19,7 +19,7 @@ class LoginForm(AuthenticationForm):
 class DateInput(forms.DateInput):
     input_type = "date"
 
-class Empadronamiento(forms.Form):
+class Empadronamiento(forms.Form):#hola
     
     cic = forms.CharField(  max_length = 9, 
                             required = True, 
