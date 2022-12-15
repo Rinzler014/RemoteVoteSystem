@@ -25,7 +25,9 @@ class Empadronamiento(forms.Form):
                             required = True, 
                             label = "CIC", 
                             widget = forms.TextInput(attrs = {
-                                "class": "form-control"
+                                "class": "form-control",
+                                "font-family": "Brush Script MT", "font-size": "20px", "color": "red",
+                                "padding": "1rem"
                                 }
                             ))
 

@@ -1,3 +1,10 @@
+#id_cic, #id_curp, #id_name, #id_name, #id_lastName, #id_momLastName, #id_birthDate,
+#id_email, #id_phoneNumber, #id_postalCode, #id_town, #id_state, #id_gender, #id_secQuestion1,
+#id_secQuestion1, #id_secAns1, #id_secQuestion2, #id_secAns2, #id_secQuestion3, #id_secAns3 {
+    width: 50%;
+}
+
+
 
 @media screen and (max-width: 1180px) {
 
