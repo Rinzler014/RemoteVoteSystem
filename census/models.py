@@ -24,7 +24,9 @@ class Padron(models.Model):
     Ans2 = models.CharField(max_length=20)
     Q3 = models.CharField(max_length=80)
     Ans3 = models.CharField(max_length=20)
-    Rostro = models.CharField(max_length=256)
+    Rostro1 = models.ImageField(upload_to='images/')
+    Rostro2 = models.ImageField(upload_to='images/')
+    Rostro3 = models.ImageField(upload_to='images/')
 
     def __str__(self):
         return self.CIC

@@ -19,6 +19,8 @@ class LoginForm(AuthenticationForm):
 class DateInput(forms.DateInput):
     input_type = "date"
 
+
+
 class Empadronamiento(forms.Form):#hola
     
     cic = forms.CharField(  max_length = 9, 
@@ -166,7 +168,12 @@ class Empadronamiento(forms.Form):#hola
                                     }
                                 ))
 
-    biometricalFace = forms.FileInput()
+    rostro1 = forms.ImageField( required = True, 
+                                label = "Imagen rostro 1")
+    rostro2 = forms.ImageField( required = True, 
+                                label = "Imagen rostro 2")
+    rostro3 = forms.ImageField( required = True, 
+                                label = "Imagen rostro 3")
 
     def clean_phoneNumber(self):
         print(type(self.cleaned_data))

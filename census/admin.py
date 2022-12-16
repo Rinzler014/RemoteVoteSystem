@@ -22,7 +22,7 @@ class PadronAdmin(admin.ModelAdmin):
             "fields": ("Q1", "Ans1", "Q2", "Ans2", "Q3", "Ans3")
         }),
         ("Informacion Biométrica", {
-            "fields": ("Rostro",)
+            "fields": ("Rostro1", "Rostro2", "Rostro3")
         }),
         )
 
