@@ -168,11 +168,11 @@ class Empadronamiento(forms.Form):#hola
                                     }
                                 ))
 
-    rostro1 = forms.ImageField( required = True, 
+    faceImage1 = forms.ImageField( #required = True, 
                                 label = "Imagen rostro 1")
-    rostro2 = forms.ImageField( required = True, 
+    faceImage2 = forms.ImageField( #required = True, 
                                 label = "Imagen rostro 2")
-    rostro3 = forms.ImageField( required = True, 
+    faceImage3 = forms.ImageField( #required = True, 
                                 label = "Imagen rostro 3")
 
     # TODO: Create new validations

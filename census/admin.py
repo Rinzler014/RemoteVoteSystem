@@ -3,7 +3,6 @@ from .models import *
 
 # Register your models here.
 
-@admin.register(Padron)
 class PadronAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Identificadores", {
