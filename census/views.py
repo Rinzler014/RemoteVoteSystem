@@ -25,7 +25,12 @@ def empadron(request):
 
         if empadron_form.is_valid():
             print("FORM VALID!")
-            print(empadron_form.cleaned_data["state"])
+
+            data = empadron_form.cleaned_data
+
+            print(type(data))
+            print(data)
+
             return redirect("empadron")
         
     
@@ -67,25 +72,6 @@ def log_in(request):
             "form" : form
         }
     )
-
-
-
-    '''
-
-    login_form = LoginEmpadronamiento(request.POST or None)
-    context = {
-        "title": "Acceso a Colaboradores",
-        "form": login_form
-    }
-
-    if login_form.is_valid():
-        print("LOGIN CORRECT!")
-        request.session['forward'] = True
-        return redirect("empadron", login_form.cleaned_data.get("username"))
-    
-    return render(request, "empadron/login.html", context)
-
-    '''
 
 
 @login_required(login_url="/")

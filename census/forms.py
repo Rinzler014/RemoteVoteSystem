@@ -175,6 +175,8 @@ class Empadronamiento(forms.Form):#hola
     rostro3 = forms.ImageField( required = True, 
                                 label = "Imagen rostro 3")
 
+    # TODO: Create new validations
+
     def clean_phoneNumber(self):
         print(type(self.cleaned_data))
         phoneNumber = self.cleaned_data.get("phoneNumber")

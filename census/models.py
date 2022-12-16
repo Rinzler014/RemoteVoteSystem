@@ -6,30 +6,30 @@ from django.contrib.auth.forms import AuthenticationForm
 # Create your models here.
 
 class Padron(models.Model):
-    CIC = models.CharField(max_length=9, primary_key=True, unique=True)
-    CURP = models.CharField(max_length=18)
-    Nombre = models.CharField(max_length=40)
-    ApPaterno = models.CharField(max_length=40)
-    ApMaterno = models.CharField(max_length=40)
-    FechaNacimiento = models.CharField(max_length = 10)
-    Correo = models.CharField(max_length=20)
-    Telefono = models.CharField(max_length=20)
-    CP = models.IntegerField()
-    Municipio = models.CharField(max_length=40)
-    Estado = models.CharField(max_length=40)
-    Genero = models.CharField(max_length=2)
-    Q1 = models.CharField(max_length=80)
-    Ans1 = models.CharField(max_length=20)
-    Q2 = models.CharField(max_length=80)
-    Ans2 = models.CharField(max_length=20)
-    Q3 = models.CharField(max_length=80)
-    Ans3 = models.CharField(max_length=20)
-    Rostro1 = models.ImageField(upload_to='images/')
-    Rostro2 = models.ImageField(upload_to='images/')
-    Rostro3 = models.ImageField(upload_to='images/')
+    cic = models.CharField(max_length=9, primary_key=True, unique=True)
+    curp = models.CharField(max_length=18)
+    name = models.CharField(max_length=40)
+    lastName = models.CharField(max_length=40)
+    momLastName = models.CharField(max_length=40)
+    birthDate = models.CharField(max_length = 10)
+    email = models.CharField(max_length=20)
+    phoneNumber = models.CharField(max_length=20)
+    postalCode = models.IntegerField()
+    town = models.CharField(max_length=40)
+    estate = models.CharField(max_length=40)
+    gender = models.CharField(max_length=2)
+    secQuest1 = models.CharField(max_length=80)
+    secAns1 = models.CharField(max_length=20)
+    secQuest2 = models.CharField(max_length=80)
+    secAns2 = models.CharField(max_length=20)
+    secQuest3 = models.CharField(max_length=80)
+    secAns3 = models.CharField(max_length=20)
+    faceImage1 = models.ImageField(upload_to='images/')
+    faceImage2 = models.ImageField(upload_to='images/')
+    faceImage3 = models.ImageField(upload_to='images/')
 
     def __str__(self):
-        return self.CIC
+        return self.cic
 
 class Locations(models.Model):
     state = models.CharField(max_length=50)
