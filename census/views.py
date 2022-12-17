@@ -17,7 +17,7 @@ def empadron(request):
 
     if request.user.is_authenticated:
 
-        empadron_form = Empadronamiento(request.POST or None)
+        empadron_form = Empadronamiento(request.POST, request.FILES or None)
         context = {
             "title": "Empadronamiento de Usuarios",
             "form": empadron_form
@@ -28,8 +28,29 @@ def empadron(request):
 
             data = empadron_form.cleaned_data
 
-            print(type(data))
-            print(data)
+            Padron.objects.create(
+                cic = data["cic"],
+                curp = data["curp"],
+                name = data["name"],
+                lastName = data["lastName"],
+                momLastName = data["momLastName"],
+                birthDate = data["birthDate"],
+                email = data["email"],
+                phoneNumber = data["phoneNumber"],
+                postalCode = data["postalCode"],
+                town = data["town"],
+                estate = data["state"],
+                gender = data["gender"],
+                secQuest1 = data["secQuestion1"],
+                secAns1 = data["secAns1"],
+                secQuest2 = data["secQuestion2"],
+                secAns2 = data["secAns2"],
+                secQuest3 = data["secQuestion3"],
+                secAns3 = data["secAns3"],
+                faceImage1 = data["faceImage1"],
+                faceImage2 = data["faceImage2"],
+                faceImage3 = data["faceImage3"],
+            )
 
             return redirect("empadron")
         

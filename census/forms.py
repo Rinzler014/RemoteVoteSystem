@@ -168,11 +168,11 @@ class Empadronamiento(forms.Form):#hola
                                     }
                                 ))
 
-    faceImage1 = forms.ImageField( #required = True, 
+    faceImage1 = forms.ImageField(
                                 label = "Imagen rostro 1")
-    faceImage2 = forms.ImageField( #required = True, 
+    faceImage2 = forms.ImageField(
                                 label = "Imagen rostro 2")
-    faceImage3 = forms.ImageField( #required = True, 
+    faceImage3 = forms.ImageField(
                                 label = "Imagen rostro 3")
 
     # TODO: Create new validations
@@ -186,6 +186,13 @@ class Empadronamiento(forms.Form):#hola
             raise forms.ValidationError("El numero telefonico debe ser de 10 caracteres...")
         
         return phoneNumber
+    
+    def __init__(self, *args, **kwargs):
+        super(Empadronamiento, self).__init__(*args, **kwargs)
+        self.fields['faceImage1'].required = False
+        self.fields['faceImage2'].required = False
+        self.fields['faceImage3'].required = False
+    
     
 
 
