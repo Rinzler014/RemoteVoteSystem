@@ -39,7 +39,7 @@ class State(models.Model):
 
 class Town(models.Model):
     town = models.CharField(max_length=50)
-    code = models.CharField(max_length=3)
+    code = models.CharField(max_length=4)
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     def _str_(self):
         return self.town 
