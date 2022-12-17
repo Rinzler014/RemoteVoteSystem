@@ -19,7 +19,7 @@ class LoginForm(AuthenticationForm):
 class Empadronamiento(forms.Form):
     
     cic = forms.CharField(  max_length = 9, 
-                            required = True, 
+                            required = True,
                             label = "CIC", 
                             widget = forms.TextInput(attrs = {
                                 "class": "form-control"
@@ -167,7 +167,7 @@ class Empadronamiento(forms.Form):
     faceImage2 = forms.ImageField(label = "Imagen rostro 2")
     faceImage3 = forms.ImageField(label = "Imagen rostro 3")
 
-    # TODO: Create new validations
+
 
     def clean_phoneNumber(self):
         print(type(self.cleaned_data))
@@ -179,12 +179,7 @@ class Empadronamiento(forms.Form):
         
         return phoneNumber
     
-    def __init__(self, *args, **kwargs):
-        super(Empadronamiento, self).__init__(*args, **kwargs)
 
-        self.fields['faceImage1'].required = False
-        self.fields['faceImage2'].required = False
-        self.fields['faceImage3'].required = False
     
     
 

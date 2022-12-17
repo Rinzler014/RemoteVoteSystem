@@ -15,52 +15,61 @@ from .models import *
 @login_required(login_url="/")
 def empadron(request):
 
-    if request.user.is_authenticated:
+    if request.method == "POST":
 
-        empadron_form = Empadronamiento(request.POST, request.FILES or None)
+        if request.user.is_authenticated:
+
+            empadron_form = Empadronamiento(request.POST, request.FILES)
+            context = {
+                "title": "Empadronamiento de Usuarios",
+                "form": empadron_form
+            }
+
+
+            if empadron_form.is_valid():
+                print("FORM VALID!")
+
+                data = empadron_form.cleaned_data
+
+                print(data)
+
+                Padron.objects.create(
+                    cic = data["cic"],
+                    curp = data["curp"],
+                    name = data["name"],
+                    lastName = data["lastName"],
+                    momLastName = data["momLastName"],
+                    birthDate = data["birthDate"],
+                    mail = data["mail"],
+                    phoneNumber = data["phoneNumber"],
+                    postalCode = data["postalCode"],
+                    town = data["town"],
+                    state = data["state"],
+                    gender = data["gender"],
+                    secQuestion1 = data["secQuestion1"],
+                    secAns1 = data["secAns1"],
+                    secQuestion2 = data["secQuestion2"],
+                    secAns2 = data["secAns2"],
+                    secQuestion3 = data["secQuestion3"],
+                    secAns3 = data["secAns3"],
+                    faceImage1 = request.FILES["faceImage1"],
+                    faceImage2 = request.FILES["faceImage2"],
+                    faceImage3 = request.FILES["faceImage3"],
+                )
+
+                return redirect("empadron")
+            
+        
+            return render(request, "empadron/form.html", context)
+    
+    else:
+        empadron_form = Empadronamiento()
         context = {
             "title": "Empadronamiento de Usuarios",
             "form": empadron_form
         }
 
-
-        if empadron_form.is_valid():
-            print("FORM VALID!")
-
-            data = empadron_form.cleaned_data
-
-            Padron.objects.create(
-                cic = data["cic"],
-                curp = data["curp"],
-                name = data["name"],
-                lastName = data["lastName"],
-                momLastName = data["momLastName"],
-                birthDate = data["birthDate"],
-                mail = data["mail"],
-                phoneNumber = data["phoneNumber"],
-                postalCode = data["postalCode"],
-                town = data["town"],
-                state = data["state"],
-                gender = data["gender"],
-                secQuestion1 = data["secQuestion1"],
-                secAns1 = data["secAns1"],
-                secQuestion2 = data["secQuestion2"],
-                secAns2 = data["secAns2"],
-                secQuestion3 = data["secQuestion3"],
-                secAns3 = data["secAns3"],
-                faceImage1 = data["faceImage1"],
-                faceImage2 = data["faceImage2"],
-                faceImage3 = data["faceImage3"],
-            )
-
-            return redirect("empadron")
-        
-    
         return render(request, "empadron/form.html", context)
-    
-    else:
-        messages.error(request, "Usuario no Autenticado")
-        return redirect("login")
 
 
 def log_in(request):
