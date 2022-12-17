@@ -22,6 +22,7 @@ def empadron(request):
             "title": "Empadronamiento de Usuarios",
             "form": empadron_form
         }
+        
 
         if empadron_form.is_valid():
             print("FORM VALID!")
