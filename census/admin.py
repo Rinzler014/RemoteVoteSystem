@@ -25,4 +25,5 @@ class PadronAdmin(admin.ModelAdmin):
         }),
         )
 
-admin.site.register(Locations)
+admin.site.register(State)
+admin.site.register(Town)

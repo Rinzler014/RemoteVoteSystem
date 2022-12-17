@@ -16,12 +16,7 @@ class LoginForm(AuthenticationForm):
                 "placeholder": "Contraseña"
             })
 
-class DateInput(forms.DateInput):
-    input_type = "date"
-
-
-
-class Empadronamiento(forms.Form):#hola
+class Empadronamiento(forms.Form):
     
     cic = forms.CharField(  max_length = 9, 
                             required = True, 
@@ -73,7 +68,7 @@ class Empadronamiento(forms.Form):#hola
                                     )
                                     
 
-    email = forms.EmailField(   required = True, 
+    mail = forms.EmailField(   required = True, 
                                 label = "Correo Electronico",
                                 widget = forms.TextInput(attrs = {
                                     "class": "form-email-field"
@@ -96,9 +91,9 @@ class Empadronamiento(forms.Form):#hola
                                             }
                                         ))
 
-    town = forms.ChoiceField(   required = True, 
+    town = forms.ModelChoiceField(   required = True, 
                                 label = "Municipio",
-                                choices=(("E", "E"),),
+                                queryset = State.objects.all(),
                                 widget = forms.Select(attrs = {
                                     "class": "form-list-field"
                                     }
@@ -106,7 +101,7 @@ class Empadronamiento(forms.Form):#hola
 
     state = forms.ModelChoiceField( required = True, 
                                     label = "Estado",
-                                    queryset = Locations.objects.all(),
+                                    queryset = State.objects.all(),
                                     widget = forms.Select(attrs = {
                                         "class": "form-list-field"
                                         }
@@ -168,12 +163,9 @@ class Empadronamiento(forms.Form):#hola
                                     }
                                 ))
 
-    faceImage1 = forms.ImageField(
-                                label = "Imagen rostro 1")
-    faceImage2 = forms.ImageField(
-                                label = "Imagen rostro 2")
-    faceImage3 = forms.ImageField(
-                                label = "Imagen rostro 3")
+    faceImage1 = forms.ImageField(label = "Imagen rostro 1")
+    faceImage2 = forms.ImageField(label = "Imagen rostro 2")
+    faceImage3 = forms.ImageField(label = "Imagen rostro 3")
 
     # TODO: Create new validations
 
@@ -189,6 +181,7 @@ class Empadronamiento(forms.Form):#hola
     
     def __init__(self, *args, **kwargs):
         super(Empadronamiento, self).__init__(*args, **kwargs)
+
         self.fields['faceImage1'].required = False
         self.fields['faceImage2'].required = False
         self.fields['faceImage3'].required = False

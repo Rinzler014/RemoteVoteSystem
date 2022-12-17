@@ -12,17 +12,17 @@ class Padron(models.Model):
     lastName = models.CharField(max_length=40)
     momLastName = models.CharField(max_length=40)
     birthDate = models.CharField(max_length = 10)
-    email = models.CharField(max_length=20)
+    mail = models.CharField(max_length=20)
     phoneNumber = models.CharField(max_length=20)
     postalCode = models.IntegerField()
     town = models.CharField(max_length=40)
-    estate = models.CharField(max_length=40)
+    state = models.CharField(max_length=40)
     gender = models.CharField(max_length=2)
-    secQuest1 = models.CharField(max_length=80)
+    secQuestion1 = models.CharField(max_length=80)
     secAns1 = models.CharField(max_length=20)
-    secQuest2 = models.CharField(max_length=80)
+    secQuestion2 = models.CharField(max_length=80)
     secAns2 = models.CharField(max_length=20)
-    secQuest3 = models.CharField(max_length=80)
+    secQuestion3 = models.CharField(max_length=80)
     secAns3 = models.CharField(max_length=20)
     faceImage1 = models.ImageField(upload_to='images/')
     faceImage2 = models.ImageField(upload_to='images/')
@@ -31,11 +31,18 @@ class Padron(models.Model):
     def __str__(self):
         return self.cic
 
-class Locations(models.Model):
+class State(models.Model):
     state = models.CharField(max_length=50)
     code = models.CharField(max_length=3)
     def __str__(self):
         return self.state
 
-class SecurityQuestions(models.Model):
+class Town(models.Model):
+    town = models.CharField(max_length=50)
+    code = models.CharField(max_length=3)
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    def _str_(self):
+        return self.town 
+
+class SecurityQuestion(models.Model):
     question = models.CharField(max_length=200)

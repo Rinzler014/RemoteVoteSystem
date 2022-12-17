@@ -22,7 +22,7 @@ def empadron(request):
             "title": "Empadronamiento de Usuarios",
             "form": empadron_form
         }
-        
+
 
         if empadron_form.is_valid():
             print("FORM VALID!")
@@ -36,17 +36,17 @@ def empadron(request):
                 lastName = data["lastName"],
                 momLastName = data["momLastName"],
                 birthDate = data["birthDate"],
-                email = data["email"],
+                mail = data["mail"],
                 phoneNumber = data["phoneNumber"],
                 postalCode = data["postalCode"],
                 town = data["town"],
-                estate = data["state"],
+                state = data["state"],
                 gender = data["gender"],
-                secQuest1 = data["secQuestion1"],
+                secQuestion1 = data["secQuestion1"],
                 secAns1 = data["secAns1"],
-                secQuest2 = data["secQuestion2"],
+                secQuestion2 = data["secQuestion2"],
                 secAns2 = data["secAns2"],
-                secQuest3 = data["secQuestion3"],
+                secQuestion3 = data["secQuestion3"],
                 secAns3 = data["secAns3"],
                 faceImage1 = data["faceImage1"],
                 faceImage2 = data["faceImage2"],
