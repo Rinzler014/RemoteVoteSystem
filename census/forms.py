@@ -91,14 +91,6 @@ class Empadronamiento(forms.Form):
                                             }
                                         ))
 
-    town = forms.ModelChoiceField(   required = True, 
-                                label = "Municipio",
-                                queryset = State.objects.all(),
-                                widget = forms.Select(attrs = {
-                                    "class": "form-list-field"
-                                    }
-                                ))
-
     state = forms.ModelChoiceField( required = True, 
                                     label = "Estado",
                                     queryset = State.objects.all(),
@@ -106,6 +98,14 @@ class Empadronamiento(forms.Form):
                                         "class": "form-list-field"
                                         }
                                     ))
+
+    town = forms.ModelChoiceField(   required = True, 
+                                label = "Municipio",
+                                queryset = Town.objects.filter().order_by('town'),
+                                widget = forms.Select(attrs = {
+                                    "class": "form-list-field"
+                                    }
+                                ))
 
     gender = forms.ChoiceField( required = True,
                                 label = "Genero",
@@ -115,9 +115,9 @@ class Empadronamiento(forms.Form):
                                     }
                                 ))
 
-    secQuestion1 = forms.ChoiceField( required = True,
+    secQuestion1 = forms.ModelChoiceField( required = True,
                                       label = "Pregunta de Seguridad 1",
-                                      choices=(("E", "E"),),
+                                      queryset = SecurityQuestion.objects.all(),
                                       widget = forms.Select(attrs = {
                                           "class": "form-list-field"
                                           }
@@ -131,9 +131,9 @@ class Empadronamiento(forms.Form):
                                     }
                                 ))
 
-    secQuestion2 = forms.ChoiceField(   required = True, 
+    secQuestion2 = forms.ModelChoiceField(   required = True, 
                                         label = "Pregunta de Seguridad 2",
-                                        choices=(("E", "E"),),
+                                        queryset = SecurityQuestion.objects.all(),
                                         widget = forms.Select(attrs = {
                                             "class": "form-list-field"
                                             }
@@ -147,9 +147,9 @@ class Empadronamiento(forms.Form):
                                     }
                                 ))
 
-    secQuestion3 = forms.ChoiceField(   required = True, 
+    secQuestion3 = forms.ModelChoiceField(   required = True, 
                                         label = "Pregunta de Seguridad 3",
-                                        choices=(("E", "E"),),
+                                        queryset = SecurityQuestion.objects.all(),
                                         widget = forms.Select(attrs = {
                                             "class": "form-list-field"
                                             }
