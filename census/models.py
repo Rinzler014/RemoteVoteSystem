@@ -46,3 +46,5 @@ class Town(models.Model):
 
 class SecurityQuestion(models.Model):
     question = models.CharField(max_length=200)
+    def __str__(self):
+        return self.question 

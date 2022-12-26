@@ -27,3 +27,4 @@ class PadronAdmin(admin.ModelAdmin):
 
 admin.site.register(State)
 admin.site.register(Town)
+admin.site.register(SecurityQuestion)
