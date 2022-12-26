@@ -47,10 +47,10 @@ Here are an interest links from every application to access a files that control
 
   [Archivos de Base](voting)
   
-  [Archivos Web](voting/templates/tickets)
+  [Archivos Web](voting/templates/voting)
 
 - Auditorias
 
-  [Archivos de Base](auditories)
+  [Archivos de Base](auditoring)
   
-  [Archivos Web](auditories/templates/tickets)
+  [Archivos Web](auditoring/templates/auditoring)
