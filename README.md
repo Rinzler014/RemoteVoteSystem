@@ -32,5 +32,25 @@ This will open a local server to host the project, now in the web broswer open t
 Here are an interest links from every application to access a files that control an aspect of the respective app
 
 - Empadronamiento
+
   [Archivos de Base](census)
+
   [Archivos Web](census/templates/empadron)
+
+- Boletas
+
+  [Archivos de Base](tickets)
+  
+  [Archivos Web](tickets/templates/tickets)
+  
+- Votacion de Usuarios
+
+  [Archivos de Base](voting)
+  
+  [Archivos Web](voting/templates/tickets)
+
+- Auditorias
+
+  [Archivos de Base](auditories)
+  
+  [Archivos Web](auditories/templates/tickets)
