@@ -26,3 +26,11 @@ This will open a local server to host the project, now in the web broswer open t
 ```html
 127.0.0.1:8000
 ```
+
+## Access Links
+
+Here are an interest links from every application to access a files that control an aspect of the respective app
+
+- Empadronamiento
+
+  [Archivos Web](census/static/templates)
