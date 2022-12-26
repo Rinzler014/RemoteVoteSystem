@@ -33,4 +33,4 @@ Here are an interest links from every application to access a files that control
 
 - Empadronamiento
 
-  [Archivos Web](census/static/templates)
+  [Archivos Web](census/templates/empadron)
