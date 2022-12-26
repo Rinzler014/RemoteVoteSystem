@@ -32,5 +32,5 @@ This will open a local server to host the project, now in the web broswer open t
 Here are an interest links from every application to access a files that control an aspect of the respective app
 
 - Empadronamiento
-
+  [Archivos de Base](census)
   [Archivos Web](census/templates/empadron)
