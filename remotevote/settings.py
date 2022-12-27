@@ -39,9 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'census',
+    'auditoring',
+    'voting',
+    
     'jquery',
     'crispy_forms',
     'crispy_bootstrap5',
+    
 ]
 
 MIDDLEWARE = [
