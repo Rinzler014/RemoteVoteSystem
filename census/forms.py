@@ -103,7 +103,8 @@ class Empadronamiento(forms.Form):
                                 label = "Municipio",
                                 queryset = Town.objects.filter().order_by('town'),
                                 widget = forms.Select(attrs = {
-                                    "class": "form-list-field"
+                                    "class": "form-list-field",
+                                    "autocomplete": "on"
                                     }
                                 ))
 
@@ -163,21 +164,47 @@ class Empadronamiento(forms.Form):
                                     }
                                 ))
 
-    faceImage1 = forms.ImageField(label = "Imagen rostro 1")
-    faceImage2 = forms.ImageField(label = "Imagen rostro 2")
-    faceImage3 = forms.ImageField(label = "Imagen rostro 3")
+    faceImage1 = forms.ImageField(label = "Imagen Rostro Numero 1")
+    faceImage2 = forms.ImageField(label = "Imagen Rostro Numero 2")
+    faceImage3 = forms.ImageField(label = "Imagen Rostro Numero 3")
+
+    # VALIDATIONS
+
+    def clean_cic(self):
+        cic = self.cleaned_data.get("cic")
+
+        if len(cic) != 9:
+            raise forms.ValidationError("El CIC debe ser de 9 caracteres...")
+
+        return cic
 
 
+    def clean_curp(self):
+        curp = self.cleaned_data.get("curp")
 
+        if len(curp) != 18:
+            raise forms.ValidationError("La CURP debe ser de 18 caracteres...")
+
+        return curp
+
+    
     def clean_phoneNumber(self):
         print(type(self.cleaned_data))
         phoneNumber = self.cleaned_data.get("phoneNumber")
-        print(phoneNumber)
 
         if len(phoneNumber) != 10:
             raise forms.ValidationError("El numero telefonico debe ser de 10 caracteres...")
         
         return phoneNumber
+    
+    
+    def clean_postalCode(self):
+        postalCode = self.cleaned_data.get("postalCode")
+
+        if len(str(postalCode)) != 5:
+            raise forms.ValidationError("El codigo postal debe ser de 5 caracteres...")
+        
+        return postalCode
     
 
     

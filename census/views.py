@@ -12,6 +12,9 @@ from .models import *
 
 # Create your views here.
 
+def home(request):
+    return render(request, "empadron/home.html")
+
 @login_required(login_url="/")
 def empadron(request):
 

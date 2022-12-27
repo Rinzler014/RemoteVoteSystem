@@ -19,7 +19,6 @@
 
     {% endblock %}
 
-	<title>Inicio</title>
 </head>
 <body>
 
@@ -37,7 +36,8 @@
 
             <ul>
 
-                <li><a href = "inicio.html"><span class = "icon-user"></span> Empadronamiento </a></li>
+                <li><a href = "{% url 'home' %}"><span class = "icon-home"></span> Inicio </a></li>
+                <li><a href = "{% url 'login' %}"><span class = "icon-user"></span> Empadronamiento </a></li>
                 <li><a href = "#"><span class = "icon-bar-chart"></span> Reportes </span></a></li>
                 <li><a href = "servicio_tecnico.html"><span class = "icon-wrench"></span> Servicio Tecnico </a></li>
 
