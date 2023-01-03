@@ -9,7 +9,6 @@ from django.contrib import messages
 from .forms import *
 from .models import *
 
-
 # Create your views here.
 
 def home(request):
