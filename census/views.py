@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.urls import reverse_lazy
 from .forms import *
 from .models import *
 
@@ -13,6 +14,7 @@ from .models import *
 
 def home(request):
     return render(request, "empadron/home.html")
+
 
 @login_required(login_url="/")
 def empadron(request):
@@ -113,3 +115,8 @@ def log_out(request):
     messages.info(request, "Cierre de Sesion Exitoso")
     return render(request, "empadron/logout.html")
             
+
+def load_towns(request):
+    state_id = request.GET.get('state')
+    towns = Town.objects.filter(state_id = state_id).order_by('town')
+    return render(request, "empadron/towns_dropdown.html", {'towns': towns})

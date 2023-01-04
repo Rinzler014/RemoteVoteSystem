@@ -1,0 +1,6 @@
+<div id="form-item">
+    <option id = "id_town" class = "form-control" value="">---------</option>
+    {% for town in towns %}
+    <option id = "id_town" class = "form-control" value="{{ town.pk }}">{{ town.town }}</option>
+    {% endfor %}
+</div>
