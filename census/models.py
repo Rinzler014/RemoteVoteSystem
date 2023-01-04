@@ -33,9 +33,9 @@ class Padron(models.Model):
 
 class State(models.Model):
     state = models.CharField(max_length=50)
-    code = models.CharField(max_length=3)
+    code = models.IntegerField()
     def __str__(self):
-        return self.state
+        return self.state 
 
 class Town(models.Model):
     town = models.CharField(max_length=50)

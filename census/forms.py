@@ -71,7 +71,8 @@ class Empadronamiento(forms.Form):
     mail = forms.EmailField(   required = True, 
                                 label = "Correo Electronico",
                                 widget = forms.TextInput(attrs = {
-                                    "class": "form-email-field"
+                                    "class": "form-control",
+                                    "type": "email"
                                     }
                                 ))
 
@@ -95,7 +96,7 @@ class Empadronamiento(forms.Form):
                                     label = "Estado",
                                     queryset = State.objects.all(),
                                     widget = forms.Select(attrs = {
-                                        "class": "form-list-field"
+                                        "class": "form-control"
                                         }
                                     ))
 
@@ -103,8 +104,7 @@ class Empadronamiento(forms.Form):
                                 label = "Municipio",
                                 queryset = Town.objects.filter().order_by('town'),
                                 widget = forms.Select(attrs = {
-                                    "class": "form-list-field",
-                                    "autocomplete": "on"
+                                    "class": "form-control",
                                     }
                                 ))
 
@@ -112,7 +112,7 @@ class Empadronamiento(forms.Form):
                                 label = "Genero",
                                 choices=(("MaleG", "M"), ("FemaleG", "F")),
                                 widget = forms.Select(attrs = {
-                                    "class": "form-list-field"
+                                    "class": "form-control"
                                     }
                                 ))
 
@@ -120,7 +120,7 @@ class Empadronamiento(forms.Form):
                                       label = "Pregunta de Seguridad 1",
                                       queryset = SecurityQuestion.objects.all(),
                                       widget = forms.Select(attrs = {
-                                          "class": "form-list-field"
+                                          "class": "form-control"
                                           }
                                       ))
 
@@ -136,7 +136,7 @@ class Empadronamiento(forms.Form):
                                         label = "Pregunta de Seguridad 2",
                                         queryset = SecurityQuestion.objects.all(),
                                         widget = forms.Select(attrs = {
-                                            "class": "form-list-field"
+                                            "class": "form-control"
                                             }
                                         ))
 
@@ -152,7 +152,7 @@ class Empadronamiento(forms.Form):
                                         label = "Pregunta de Seguridad 3",
                                         queryset = SecurityQuestion.objects.all(),
                                         widget = forms.Select(attrs = {
-                                            "class": "form-list-field"
+                                            "class": "form-control"
                                             }
                                         ))
 
@@ -164,9 +164,24 @@ class Empadronamiento(forms.Form):
                                     }
                                 ))
 
-    faceImage1 = forms.ImageField(label = "Imagen Rostro Numero 1")
-    faceImage2 = forms.ImageField(label = "Imagen Rostro Numero 2")
-    faceImage3 = forms.ImageField(label = "Imagen Rostro Numero 3")
+    faceImage1 = forms.ImageField(label = "Imagen Rostro Numero 1", widget=forms.FileInput(attrs={
+                                        "class" : "form-control",
+                                        "type": "file"
+                                    }))
+
+    faceImage2 = forms.ImageField(label = "Imagen Rostro Numero 2", widget=forms.FileInput(attrs={
+                                        "class" : "form-control",
+                                        "type": "file"
+                                    }))
+
+    faceImage3 = forms.ImageField(label = "Imagen Rostro Numero 3", widget=forms.FileInput(attrs={
+                                        "class" : "form-control",
+                                        "type": "file"
+                                    }))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["town"].queryset = Town.objects.none()
 
     # VALIDATIONS
 
