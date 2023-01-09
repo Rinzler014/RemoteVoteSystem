@@ -1,0 +1,46 @@
+{% extends "layouts/header.html"%}
+
+{% block content %}
+
+    {% load static %}
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Resultados de la Busqueda</title>
+
+        <link href = "{% static 'styles/votingSheet/voting_sheet_lists.css' %}" rel = "stylesheet">
+
+    </head>
+    <body>
+        
+        <h1 id="title">{{search.entries}} Boletas fueron encontradas</h1>
+
+        <div class="sheet_id_list">
+
+            <!-- for the lists -->
+
+        </div>
+
+        <button onclick="history_sheets()" class="btn btn-danger">
+
+            <p>Regresar</p>
+
+        </button>
+
+    
+        <script type="text/javascript">
+            function return_to_view(){
+             document.location.href = "{% url 'voting-sheet' %}"
+            }
+        </script>
+
+        
+
+    </body>
+    </html>
+
+{% endblock %}

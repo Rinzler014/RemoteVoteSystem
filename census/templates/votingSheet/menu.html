@@ -1,0 +1,61 @@
+{% extends "layouts/header.html"%}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Boletas Electorales</title>
+
+        <link href = "{% static 'styles/votingSheet/menu.css' %}" rel = "stylesheet">
+
+    </head>
+    <body>
+        
+        <h1 id="title">Administrador de Boletas Electorales</h1>
+
+        <div class="sheet_menu">
+
+            <button onclick="create_sheet()" class="new_sheet">
+                
+                <p>Nueva Boleta</p> 
+
+                <span class="icon-plus-circle"></span>
+
+            </button>
+    
+    
+            <button onclick="history_sheets()" class="history_sheet">
+
+                <p>Historial de Boletas</p>
+
+                <span class="icon-history"></span>
+
+            </button>
+
+        </div>
+
+        
+        <script type="text/javascript">
+            function create_sheet(){
+                document.location.href= "{% url 'voting-sheet-generate' %}"
+            }
+
+            function history_sheets() {
+                document.location.href= "{% url 'voting-sheet-history' %}"
+            }
+        </script>
+
+        
+
+    </body>
+    </html>
+
+{% endblock %}

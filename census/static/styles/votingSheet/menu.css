@@ -1,0 +1,91 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    --s: 200px; /* control the size */
+    --c1: #1d1d1d;
+    --c2: #4e4f51;
+    --c3: #3c3c3c;
+    
+    background:
+      repeating-conic-gradient(from 30deg,#0000 0 120deg,var(--c3) 0 180deg) 
+       calc(.5*var(--s)) calc(.5*var(--s)*0.577),
+      repeating-conic-gradient(from 30deg,var(--c1) 0 60deg,var(--c2) 0 120deg,var(--c3) 0 180deg);
+    background-size: var(--s) calc(var(--s)*0.577);
+}
+
+#title {
+    
+    margin: 20px auto;
+    color: white;
+    border-radius: 7px;
+    padding: 20px;
+    text-align: center;
+    width: fit-content;
+
+}
+
+.sheet_menu {
+    width: 70%;
+    display: flex;
+    flex-direction: line;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    margin: 0 auto;
+    padding: 20px;
+    
+}
+
+button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button p {
+    color: #1d1d1d;
+    text-decoration: none;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+button span {
+    margin: 10px;
+    font-size: 40pt;
+}
+
+.new_sheet {
+    background-color: #FECE00;
+    border-radius: 7px;
+    padding: 20px;
+    color: #1d1d1d;
+    text-align: center;
+    width: 50%;
+    height: fit-content;
+    border: 0;
+}
+
+.history_sheet {
+    background-color: #FECE00;
+    border-radius: 7px;
+    padding: 20px;
+    color: #1d1d1d;
+    text-align: center;
+    width: 50%;
+    height: fit-content;
+    margin: 10px;
+    border: 0;
+}
+
+@media screen and (max-width: 1180px) {
+
+    body {
+        margin-top: 20px;
+    }
+
+}
+

@@ -1,9 +1,7 @@
-/* #id_cic, #id_curp, #id_name, #id_name, #id_lastName, #id_momLastName, #id_birthDate,
-#id_email, #id_phoneNumber, #id_postalCode, #id_town, #id_state, #id_gender, #id_secQuestion1,
-#id_secQuestion1, #id_secAns1, #id_secQuestion2, #id_secAns2, #id_secQuestion3, #id_secAns3 {
-    width: 200%;
-
-} */
+* {
+    padding: 0;
+    margin: 0;
+}
 
 body {
     --s: 200px; /* control the size */
@@ -17,8 +15,6 @@ body {
       repeating-conic-gradient(from 30deg,var(--c1) 0 60deg,var(--c2) 0 120deg,var(--c3) 0 180deg);
     background-size: var(--s) calc(var(--s)*0.577);
 }
-  
-  
 
 #title {
     
@@ -31,37 +27,17 @@ body {
 
 }
 
-#reg_form{
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
+.sheet_form {
+
     width: 70%;
-    padding-bottom: 50px;
-}
-
-.form {
-    background-color: black;
-}
-
-.form-elements {
     display: flex;
     flex-direction: column;
-    background-color: white;
-    border-radius: 17px;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    margin: 0 auto;
     padding: 20px;
-}
-
-.btn {
-    margin-top: 20px;
-}
-
-#form-item {
-    margin-bottom: 10px;
-}
-
-.btn a {
-    color: white;
-    text-decoration: none;
 }
 
 
@@ -73,6 +49,3 @@ body {
     }
 
 }
-
-
-

@@ -1,0 +1,74 @@
+{% extends "layouts/header.html"%}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crear nueva boleta</title>
+
+        <link href = "{% static 'styles/votingSheet/voting_sheet_generate.css' %}" rel = "stylesheet">
+
+    </head>
+    <body>
+        
+        <h1 id="title">Nueva Boleta</h1>
+
+        <form method="POST" id="sheet_form" data-towns-url="{% url 'ajax_load_towns' %}">
+
+            {% csrf_token %}
+
+            <div id="form-item">
+                <label for="electionState">Estado*</label>
+                {{ form.electionState }}
+            </div>
+
+            <div id="form-item">
+                <label for="electionTown">Estado*</label>
+                {{ form.electionTown }}
+            </div>
+
+            <button class="btn btn-warning">Generar</button>
+
+        </form>
+
+        <button class="btn btn-danger" onclick="return_to_view()">Regresar</button>
+    
+        <script type="text/javascript">
+            function return_to_view(){
+             document.location.href = "{% url 'voting-sheet' %}"
+            }
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            $("#id_electionState").change(function () {
+            var url = $("#sheet_form").attr("data-towns-url");  // get the url of the `load_cities` view
+            var stateId = $(this).val();  // get the selected country ID from the HTML input
+
+            $.ajax({                       // initialize an AJAX request
+                url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+                data: {
+                'state': stateId       // add the country id to the GET parameters
+                },
+                success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_electionTown").html(data);  // replace the contents of the city input with the data that came from the server
+                }
+            });
+
+            });
+        </script>
+
+        
+
+    </body>
+    </html>
+
+{% endblock %}

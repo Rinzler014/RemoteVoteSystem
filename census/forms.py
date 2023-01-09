@@ -221,8 +221,98 @@ class Empadronamiento(forms.Form):
         
         return postalCode
     
+class VoteSheetsChecker(forms.Form):
 
-    
+    voteSheetID = forms.CharField(max_length = 10,
+                                    widget=forms.TextInput(attrs={
+                                        "class" : "form-control",
+                                    }))
+
+    def clean_voteSheetID(self):
+        voteSheetID = self.cleaned_data.get("voteSheetID")
+
+        if len(voteSheetID) != 10:
+            raise forms.ValidationError("El ID de la hoja de votacion debe ser de 10 caracteres...")
+
+class VoteSheetsCreate(forms.Form):
+
+    electionName = forms.CharField(max_length = 50,
+                                    label="Nombre de la Eleccion",
+                                    widget=forms.TextInput(attrs={
+                                        "class" : "form-control",
+                                        }
+                                    ))
+
+    govermentPeriodStart = forms.IntegerField( required = True,
+                                    label = "Periodo de Gobierno",
+                                    widget = forms.NumberInput(attrs = {
+                                        "class": "form-control"
+                                        }
+                                    ))
+
+    govermentPeriodEnd = forms.IntegerField( required = True,
+                                    label = "Periodo de Gobierno",
+                                    widget = forms.NumberInput(attrs = {
+                                        "class": "form-control"
+                                        }
+                                    ))
+
+    electionState = forms.ModelChoiceField( required = True,
+                                            label = "Estado",
+                                            queryset = State.objects.all(),
+                                            widget = forms.Select(attrs = {
+                                                "class": "form-control"
+                                                }
+                                            ))
+
+    electionTown = forms.ModelChoiceField(   required = True,
+                                            label = "Municipio",
+                                            queryset = Town.objects.all(),
+                                            widget = forms.Select(attrs = {
+                                                "class": "form-control"
+
+                                                }
+                                            ))
+
+    electionDateStart = forms.DateField( required = True,
+                                    label = "Fecha de inicio la Eleccion",
+                                    widget = forms.DateInput(attrs = {
+                                        "class": "form-control",
+                                        "type": "date"
+
+                                        }
+                                    ))
+
+    electionDateEnd = forms.DateField(   required = True,
+                                    label = "Fecha de fin de la Eleccion",
+                                    widget = forms.DateInput(attrs = {
+                                        "class": "form-control",
+                                        "type": "date"
+
+                                        }
+                                    ))
+
+    electionTimeStart = forms.TimeField( required = True,
+                                    label = "Hora de inicio de la Eleccion",
+                                    widget = forms.TimeInput(attrs = {
+                                        "class": "form-control",
+                                        "type": "time"
+
+                                        }
+                                    ))
+                    
+    electionTimeStart = forms.TimeField( required = True,
+                                label = "Hora de finalizacion de la Eleccion",
+                                widget = forms.TimeInput(attrs = {
+                                    "class": "form-control",
+                                    "type": "time"
+
+                                    }
+                                ))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["electionTown"].queryset = Town.objects.none()
     
 
 
