@@ -23,19 +23,73 @@
 
         <form method="POST" id="sheet_form" data-towns-url="{% url 'ajax_load_towns' %}">
 
+            {% for error in form.non_field_errors %}
+
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
+            {% endfor %}
+
             {% csrf_token %}
 
-            <div id="form-item">
-                <label for="electionState">Estado*</label>
-                {{ form.electionState }}
-            </div>
+            <div class="form-elements">
 
-            <div id="form-item">
-                <label for="electionTown">Estado*</label>
-                {{ form.electionTown }}
-            </div>
+                <div id="form-item">
+                    <label for="electionName">Nombre de la Eleccion*</label>
+                    {{ form.electionName }}
+                </div>
 
-            <button class="btn btn-warning">Generar</button>
+                <div id="form-item">
+                    <label for="govermentPeriodStart">Año de Inicio de la Gobernatura*</label>
+                    {{ form.govermentPeriodStart }}
+                </div>
+
+                <div id="form-item">
+                    <label for="govermentPeriodEnd">Año de Finalizacion de la Gobernatura*</label>
+                    {{ form.govermentPeriodEnd }}
+                </div>
+
+                <div id="form-item">
+                    <label for="electionState">Estado de la Eleccion*</label>
+                    {{ form.electionState }}
+                </div>
+    
+                <div id="form-item">
+                    <label for="electionTown">Municipio de la Eleccion*</label>
+                    {{ form.electionTown }}
+                </div>
+
+                <div id="form-item">
+                    <label for="electionDateStart">Fecha de inicio de la Eleccion*</label>
+                    {{ form.electionDateStart }}
+                </div>
+
+                <div id="form-item">
+                    <label for="electionDateEnd">Fecha de finalizacion de la Eleccion*</label>
+                    {{ form.electionDateEnd }}
+                </div>
+
+                <div id="form-item">
+                    <label for="electionTimeStart">Hora de inicio de la Eleccion*</label>
+                    {{ form.electionTimeStart }}
+                </div>
+
+                <div id="form-item">
+                    <label for="electionTimeEnd">Hora de finalizacion de la Eleccion*</label>
+                    {{ form.electionTimeEnd }}
+                </div>
+
+                <div id="form-item">
+                    <label for="electionCandidatesNumber">Numero de Candidatos*</label>
+                    {{ form.electionCandidatesNumber }}
+                </div>
+
+                <button type="submit" class="btn btn-warning">Generar</button>
+
+            </div>
 
         </form>
 
@@ -45,6 +99,34 @@
             function return_to_view(){
              document.location.href = "{% url 'voting-sheet' %}"
             }
+
+            function disableFields() {
+
+                electionName = document.getElementById("id_electionName").value;
+
+                if (electionName === "E01") {
+                    document.getElementById("id_electionState").disabled = true;
+                    document.getElementById("id_electionState").value = "N/A";
+                    document.getElementById("id_electionTown").disabled = true;
+                    document.getElementById("id_electionTown").value = "N/A";
+                }
+                else if(electionName === "E02") {
+                    document.getElementById("id_electionState").required = true;
+                    document.getElementById("id_electionState").disabled = false;
+
+                    document.getElementById("id_electionTown").disabled = true;
+                    document.getElementById("id_electionTown").value = "N/A";
+                } 
+                else {
+                    document.getElementById("id_electionState").disabled = false;
+                    document.getElementById("id_electionState").required = true;
+                    document.getElementById("id_electionTown").disabled = false;
+                    document.getElementById("id_electionTown").required = true;
+                }
+
+                
+            }
+                
         </script>
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -53,10 +135,12 @@
             var url = $("#sheet_form").attr("data-towns-url");  // get the url of the `load_cities` view
             var stateId = $(this).val();  // get the selected country ID from the HTML input
 
-            $.ajax({                       // initialize an AJAX request
+            $.ajax({
+                type : 'GET',                       // initialize an AJAX request
                 url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
                 data: {
-                'state': stateId       // add the country id to the GET parameters
+                'state': stateId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}',       // add the country id to the GET parameters
                 },
                 success: function (data) {   // `data` is the return of the `load_cities` view function
                 $("#id_electionTown").html(data);  // replace the contents of the city input with the data that came from the server
@@ -65,6 +149,11 @@
 
             });
         </script>
+
+
+        
+
+
 
         
 

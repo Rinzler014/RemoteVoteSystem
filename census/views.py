@@ -13,8 +13,10 @@ from .models import *
 
 # Create your views here.
 
-# Home
+db = utils.get_db_handle("mongodb://localhost:27017", "election")
 
+
+# Home
 def home(request):
 
     '''
@@ -104,25 +106,48 @@ def empadron(request):
 def votingSheet(request):
     return render(request, "votingSheet/menu.html")
 
+
 @login_required(login_url="/")
 def votingSheet_generate(request):
-    if request.method == "POST":
-    
-            if request.user.is_authenticated:
-    
-                votingSheet_form = VoteSheetsCreate(request.POST)
-                context = {
-                    "form": votingSheet_form
-                }
-    
-                if votingSheet_form.is_valid():
-                    print("FORM VALID!")
-                    voteSheetId = votingSheet_form.cleaned_data["voteSheetId"]  
 
-                    redirect(reverse("votingSheet_fill", kwargs={"voteSheetId": voteSheetId}))
-                
-                return render(request, "votingSheet/voting_sheets_generate.html", context)
-        
+    if request.method == "POST":
+
+            print("HELLO")
+    
+            votingSheet_form = VoteSheetsCreate(request.POST)
+            context = {
+                "form": votingSheet_form
+            }
+
+            print(votingSheet_form.is_valid())
+
+            print(votingSheet_form.cleaned_data)
+
+            if votingSheet_form.is_valid():
+                print("FORM VALID!")
+
+                electionDB = db["vote_sheets"]
+
+                data = votingSheet_form.cleaned_data
+
+                votingSheet_form.cleaned_data["electionDateStart"] = votingSheet_form.cleaned_data["electionDateStart"].strftime("%Y/%m/%d")
+                votingSheet_form.cleaned_data["electionDateEnd"] = votingSheet_form.cleaned_data["electionDateEnd"].strftime("%Y/%m/%d")
+
+                votingSheet_form.cleaned_data["electionTimeStart"] = votingSheet_form.cleaned_data["electionTimeStart"].strftime("%H:%M")
+                votingSheet_form.cleaned_data["electionTimeEnd"] = votingSheet_form.cleaned_data["electionTimeEnd"].strftime("%H:%M")
+
+                # print(type(data["electionState"]))
+                # print(data["electionState"])
+
+                # print(type(data["electionTown"]))
+                # print(data["electionTown"])
+
+                sheet = electionDB.insert_one(data)
+
+                return redirect('voting-sheet-fill', id_sheet = str(sheet.inserted_id))
+
+            return render(request, "votingSheet/voting_sheets_generate.html", context)
+                                   
     else:
         votingSheet_form = VoteSheetsCreate()
         context = {
@@ -132,8 +157,32 @@ def votingSheet_generate(request):
         return render(request, "votingSheet/voting_sheets_generate.html", context)
 
 @login_required(login_url="/")
-def votingSheet_fill(request):
-    pass
+def votingSheet_fill(request, id_sheet):
+
+    if request.method == "POST":
+    
+            if request.user.is_authenticated:
+    
+                votingSheet_form = VoteSheetsFill(request.POST)
+                context = {
+                    "form": votingSheet_form
+                }
+    
+                if votingSheet_form.is_valid():
+                    print("FORM VALID!")
+                    data = votingSheet_form.cleaned_data  
+                
+                return redirect("home")
+        
+    else:
+        votingSheet_form = VoteSheetsFill()
+        context = {
+            "form": votingSheet_form
+        }
+
+        return render(request, "votingSheet/voting_sheets_fill.html", context)
+    
+
 
 @login_required(login_url="/")
 def votingSheet_candidates(request):

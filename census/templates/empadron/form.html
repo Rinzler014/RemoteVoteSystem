@@ -20,7 +20,7 @@
     </head>
     <body>
         
-        <h1 id="title">Bienvenido de Nuevo {{user.first_name}}</h1>
+        <h1 id="title">Registro de Nuevos Usuarios</h1>
 
         <form method="POST" id="reg_form" data-towns-url="{% url 'ajax_load_towns' %}" enctype="multipart/form-data">
 
@@ -157,10 +157,6 @@
             <button class="btn btn-warning">Guardar</button>
 
         </form>
-
-        <button type="button" class="btn btn-danger">
-            <a href="{% url 'logout' %}">Cerrar Sesion</a>
-        </button>
         
     </body>
     </html>

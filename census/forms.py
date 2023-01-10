@@ -1,7 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import check_password
+import datetime
+from django.contrib import messages
 from .models import *
+
 
 
 class LoginForm(AuthenticationForm):
@@ -183,6 +186,14 @@ class Empadronamiento(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields["town"].queryset = Town.objects.none()
 
+        if "state" in self.data:
+            try:
+                state = int(self.data.get("state"))
+                self.fields["town"].queryset =  Town.objects.filter(state_id = state)
+            
+            except (ValueError, TypeError):
+                pass
+
     # VALIDATIONS
 
     def clean_cic(self):
@@ -236,28 +247,40 @@ class VoteSheetsChecker(forms.Form):
 
 class VoteSheetsCreate(forms.Form):
 
-    electionName = forms.CharField(max_length = 50,
+    electionName = forms.ChoiceField( required = True,
                                     label="Nombre de la Eleccion",
-                                    widget=forms.TextInput(attrs={
+                                    choices = (("E03", "Municipal"), ("E02", "Guvernamental"), ("E01", "Presidencial")),
+                                    widget=forms.Select(attrs={
                                         "class" : "form-control",
+                                        "onchange" : "disableFields()"
                                         }
                                     ))
 
     govermentPeriodStart = forms.IntegerField( required = True,
                                     label = "Periodo de Gobierno",
                                     widget = forms.NumberInput(attrs = {
-                                        "class": "form-control"
+                                        "class": "form-control",
+                                        "type": "number",
+                                        "min": "2023",
+                                        "max": "2099",
+                                        "step": "1",
+                                        "value": "2023"
                                         }
                                     ))
 
     govermentPeriodEnd = forms.IntegerField( required = True,
                                     label = "Periodo de Gobierno",
                                     widget = forms.NumberInput(attrs = {
-                                        "class": "form-control"
+                                        "class": "form-control",
+                                        "type": "number",
+                                        "min": "2023",
+                                        "max": "2099",
+                                        "step": "1",
+                                        "value": "2023"
                                         }
                                     ))
 
-    electionState = forms.ModelChoiceField( required = True,
+    electionState = forms.ModelChoiceField( required = False,
                                             label = "Estado",
                                             queryset = State.objects.all(),
                                             widget = forms.Select(attrs = {
@@ -265,7 +288,7 @@ class VoteSheetsCreate(forms.Form):
                                                 }
                                             ))
 
-    electionTown = forms.ModelChoiceField(   required = True,
+    electionTown = forms.ModelChoiceField(   required = False,
                                             label = "Municipio",
                                             queryset = Town.objects.all(),
                                             widget = forms.Select(attrs = {
@@ -301,7 +324,7 @@ class VoteSheetsCreate(forms.Form):
                                         }
                                     ))
                     
-    electionTimeStart = forms.TimeField( required = True,
+    electionTimeEnd = forms.TimeField( required = True,
                                 label = "Hora de finalizacion de la Eleccion",
                                 widget = forms.TimeInput(attrs = {
                                     "class": "form-control",
@@ -310,10 +333,95 @@ class VoteSheetsCreate(forms.Form):
                                     }
                                 ))
 
+    electionCandidatesNumber = forms.IntegerField( required = True,
+                                                    label= "Numero de Candidatos",
+                                                    widget= forms.NumberInput(attrs = {
+                                                        "class" : "form-control",
+                                                        "type" : "number"
+                                                    }
+                                                ))
+    
+    def clean(self):
+
+        cleaned_data = super().clean()
+
+        electionDateStart = cleaned_data.get("electionDateStart")
+        electionDateEnd = cleaned_data.get("electionDateEnd")
+        govermentPeriodStart = cleaned_data.get("govermentPeriodStart")
+        govermentPeriodEnd = cleaned_data.get("govermentPeriodEnd")
+        electionTimeStart = cleaned_data.get("electionTimeStart")
+        electionTimeEnd = cleaned_data.get("electionTimeEnd")
+        
+        errors = []
+
+        if electionDateStart > electionDateEnd:
+            errors.append("La fecha de inicio de la eleccion debe ser menor a la fecha de fin de la eleccion")
+
+        if govermentPeriodStart > govermentPeriodEnd or govermentPeriodStart == govermentPeriodEnd:
+            errors.append("El inicio del periodo de gobierno debe ser mayor al fin del periodo de gobierno ")
+
+        if electionTimeStart > electionTimeEnd:
+            errors.append("La hora de inicio de la eleccion debe ser menor a la hora de fin de la eleccion")
+        
+        if errors:
+            raise forms.ValidationError(errors)
+                    
+        return cleaned_data
+
+    def clean_electionState(self):
+
+        if self.cleaned_data.get("electionState") == None:
+            return "N/A"
+        else:
+            return self.cleaned_data.get("electionState").state
+
+    def clean_electionTown(self):
+
+        if self.cleaned_data.get("electionTown") == None:
+            return "N/A"
+        else:
+            return self.cleaned_data.get("electionTown").town
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["electionTown"].queryset = Town.objects.none()
+        self.fields["electionTown"].queryset = Town.objects.none() 
+
+
+        if "electionState" in self.data:
+            try:
+                state = int(self.data.get("electionState"))
+                self.fields["electionTown"].queryset =  Town.objects.filter(state_id = state)
+            
+            except (ValueError, TypeError):
+                pass
+
+
+class VoteSheetsFill(forms.Form):
+
+   candidateName = forms.CharField( required = True,
+                                    label = "Nombre del Candidato",
+                                    widget = forms.TextInput(attrs = {
+                                        "class": "form-control",
+                                        "type": "text"
+                                        }
+                                    ))
     
+   substituteCandidateName = forms.CharField( required = True,
+                                    label = "Nombre del Candidato Suplente",
+                                    widget = forms.TextInput(attrs = {
+                                        "class": "form-control",
+                                        "type": "text"
+                                        }
+                                    ))
+
+   candidateParty = forms.ModelMultipleChoiceField( required = True,
+                                    label = "Partido Politico o Alianza",
+                                    queryset= PoliticalParty.objects.all(),
+                                    widget = forms.Select(attrs = {
+                                        "class": "form-control"
+                                        }
+                                    ))
 
 
+    
 

@@ -27,17 +27,33 @@ body {
 
 }
 
-.sheet_form {
+#sheet_form {
 
-    width: 70%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    background-color: #FFFFFF;
-    border-radius: 15px;
     margin: 0 auto;
+    width: 70%;
+    padding-bottom: 50px;
+}
+
+.form-elements {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 17px;
     padding: 20px;
+}
+
+#form-item {
+    margin-bottom: 10px;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 70%;
 }
 
 

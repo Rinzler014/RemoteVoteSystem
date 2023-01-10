@@ -33,18 +33,21 @@ body {
     background-color: white;
     border-radius: 17px;
     padding: 20px;
+    width: 70%;
+    margin: 0 auto;
 }
 
 .btn {
-    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 70%;
 }
-
 
 #form-item {
     margin-bottom: 10px;
 }
-
-
 
 
 @media screen and (max-width: 1180px) {

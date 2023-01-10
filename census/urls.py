@@ -14,8 +14,8 @@ urlpatterns = [
     path("voting-sheet/history", views.votingSheet_history, name = "voting-sheet-history"),
 
     path("voting-sheet/generate", views.votingSheet_generate, name = "voting-sheet-generate"),
-    path("voting-sheet/fill", views.votingSheet_fill, name = "voting-sheet-fill"),
-    path("voting-sheet/candidates", views.votingSheet_candidates, name = "voting-sheet-candidates"),
+    path("voting-sheet/fill/<str:id_sheet>", views.votingSheet_fill, name = "voting-sheet-fill"),
+    path("voting-sheet/candidates/<str:id_sheet>", views.votingSheet_candidates, name = "voting-sheet-candidates"),
 
     path("voting-sheet/validate", views.votingSheet_validate, name = "voting-sheet-validate"),
     
