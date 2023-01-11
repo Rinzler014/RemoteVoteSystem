@@ -513,7 +513,7 @@ class VoteSheetsCreate(forms.Form):
 
 class VoteSheetsFill(forms.Form):
 
-    candidateName = forms.CharField( required = True,
+   candidateName = forms.CharField( required = True,
                                     label = "Nombre del Candidato",
                                     widget = forms.TextInput(attrs = {
                                         "class": "form-control",
@@ -537,7 +537,7 @@ class VoteSheetsFill(forms.Form):
                                         }
                                     ))
 
-    candidateParty = forms.ModelMultipleChoiceField( required = True,
+   candidateParty = forms.ModelMultipleChoiceField( required = True,
                                     label = "Partido Politico o Alianza",
                                     queryset= PoliticalParty.objects.all(),
                                     widget = forms.Select(attrs = {

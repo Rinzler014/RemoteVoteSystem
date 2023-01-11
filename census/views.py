@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse
+from django.forms import formset_factory
+from bson import ObjectId
 import utils
 from .forms import *
 from .models import *
@@ -111,17 +113,15 @@ def votingSheet(request):
 def votingSheet_generate(request):
 
     if request.method == "POST":
-
-            print("HELLO")
     
             votingSheet_form = VoteSheetsCreate(request.POST)
             context = {
                 "form": votingSheet_form
             }
 
-            print(votingSheet_form.is_valid())
+            # print(votingSheet_form.is_valid())
 
-            print(votingSheet_form.cleaned_data)
+            # print(votingSheet_form.cleaned_data)
 
             if votingSheet_form.is_valid():
                 print("FORM VALID!")
@@ -135,12 +135,6 @@ def votingSheet_generate(request):
 
                 votingSheet_form.cleaned_data["electionTimeStart"] = votingSheet_form.cleaned_data["electionTimeStart"].strftime("%H:%M")
                 votingSheet_form.cleaned_data["electionTimeEnd"] = votingSheet_form.cleaned_data["electionTimeEnd"].strftime("%H:%M")
-
-                # print(type(data["electionState"]))
-                # print(data["electionState"])
-
-                # print(type(data["electionTown"]))
-                # print(data["electionTown"])
 
                 sheet = electionDB.insert_one(data)
 
@@ -159,28 +153,35 @@ def votingSheet_generate(request):
 @login_required(login_url="/")
 def votingSheet_fill(request, id_sheet):
 
+    electionDB = db["vote_sheets"]
+    sheet = electionDB.find_one({"_id": ObjectId(id_sheet) })
+    candidates = sheet["electionCandidatesNumber"]
+
+    fillFormSet = formset_factory(VoteSheetsFill, extra=candidates)
+    formSet = fillFormSet()
+
+    context = {
+        "formSet": formSet,
+        "sheet_id": id_sheet,
+        "candidates": candidates,
+    }
+
     if request.method == "POST":
-    
-            if request.user.is_authenticated:
-    
-                votingSheet_form = VoteSheetsFill(request.POST)
-                context = {
-                    "form": votingSheet_form
-                }
-    
-                if votingSheet_form.is_valid():
-                    print("FORM VALID!")
-                    data = votingSheet_form.cleaned_data  
-                
-                return redirect("home")
-        
-    else:
-        votingSheet_form = VoteSheetsFill()
+
+        formSet = fillFormSet(request.POST)
+
         context = {
-            "form": votingSheet_form
+            "formSet": formSet,
+            "sheet_id": id_sheet,
+            "candidates": candidates,
         }
 
-        return render(request, "votingSheet/voting_sheets_fill.html", context)
+        if formSet.is_valid():
+            print("FORM VALID!")
+            for form in formSet:
+                print(form.cleaned_data)
+
+    return render(request, "votingSheet/voting_sheets_fill.html", context)
     
 
 
