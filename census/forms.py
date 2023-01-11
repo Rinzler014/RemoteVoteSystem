@@ -5,7 +5,11 @@ import datetime
 from django.contrib import messages
 from .models import *
 
+from django.core.validators import RegexValidator
 
+letras = RegexValidator(r'^[a-zA-Z " "]*$', 'Solo se pueden ingresar letras (sin acentos, ñ=nh)')
+numeros = RegexValidator(r'^[0-9]*$', 'Solo se pueden ingresar numeros')
+numerosYletras = RegexValidator(r'^[0-9a-zA-Z]*$', 'Solo se pueden ingresar numeros y letras')
 
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -22,16 +26,28 @@ class LoginForm(AuthenticationForm):
 class Empadronamiento(forms.Form):
     
     cic = forms.CharField(  max_length = 9, 
+                            min_length= 9,
                             required = True,
                             label = "CIC", 
+                            validators=[numeros],
+                            error_messages={
+                                "required": "No puede estar vacío",
+                                "min_length": "El CIC debe ser de 9 caracteres..."
+                            },
                             widget = forms.TextInput(attrs = {
                                 "class": "form-control"
                                 }
                             ))
 
     curp = forms.CharField( max_length = 18, 
+                            min_length = 18, 
                             required = True, 
                             label = "CURP",
+                            validators=[numerosYletras],
+                            error_messages={
+                                "required": "No puede estar vacío",
+                                "min_length": "El CIC debe ser de 9 caracteres..."
+                            },
                             widget = forms.TextInput(attrs = {
                                 "class": "form-control"
                                 }
@@ -40,6 +56,10 @@ class Empadronamiento(forms.Form):
     name = forms.CharField( max_length = 40, 
                             required = True, 
                             label = "Nombre(s)",
+                            validators=[letras],
+                            error_messages={
+                                "required": "No puede estar vacío",
+                            },
                             widget = forms.TextInput(attrs = {
                                 "class": "form-control"
                                 }
@@ -48,13 +68,21 @@ class Empadronamiento(forms.Form):
     lastName = forms.CharField( max_length = 40, 
                                 required = True, 
                                 label = "Apellido Paterno",
+                                validators=[letras],
+                                error_messages={
+                                    "required": "No puede estar vacío",
+                                },
                                 widget = forms.TextInput(attrs = {
                                     "class": "form-control"
                                     }
                                 ))
 
     momLastName = forms.CharField(  max_length = 40, 
-                                    required = True, 
+                                    required = False, 
+                                    validators=[letras],
+                                    error_messages={
+                                        "required": "No puede estar vacío",
+                                    },
                                     label = "Apellido Materno",
                                     widget = forms.TextInput(attrs = {
                                         "class": "form-control"
@@ -71,17 +99,27 @@ class Empadronamiento(forms.Form):
                                     )
                                     
 
-    mail = forms.EmailField(   required = True, 
+    mail = forms.EmailField(   required = False, 
                                 label = "Correo Electronico",
-                                widget = forms.TextInput(attrs = {
+                                error_messages={
+                                    "required": "No puede estar vacío",
+                                    "invalid": "El formato de correo esta mal",
+                                },
+                                widget = forms.EmailInput(attrs = {
                                     "class": "form-control",
                                     "type": "email"
                                     }
                                 ))
 
-    phoneNumber = forms.CharField(  max_length = 10, 
-                                    required = True, 
+    phoneNumber = forms.CharField(  max_length = 10,
+                                    min_length = 10, 
+                                    required = False, 
                                     label = "Numero Telefonico",
+                                    validators=[numeros],
+                                    error_messages={
+                                        "required": "No puede estar vacío",
+                                        "min_length": "El numero telefonico debe ser de 10 caracteres..."
+                                    },
                                     widget = forms.TextInput(attrs = {
                                             "class": "form-control"
                                         }
@@ -90,6 +128,10 @@ class Empadronamiento(forms.Form):
     postalCode = forms.IntegerField(    max_value=99999,
                                         required = True, 
                                         label = "Codigo Postal",
+                                        validators=[numeros],
+                                        error_messages={
+                                            "required": "No puede estar vacío",
+                                        },
                                         widget = forms.TextInput(attrs = {
                                             "class": "form-control"
                                             }
@@ -98,6 +140,9 @@ class Empadronamiento(forms.Form):
     state = forms.ModelChoiceField( required = True, 
                                     label = "Estado",
                                     queryset = State.objects.all(),
+                                    error_messages={
+                                        "required": "No puede estar vacío",
+                                    },
                                     widget = forms.Select(attrs = {
                                         "class": "form-control"
                                         }
@@ -106,6 +151,9 @@ class Empadronamiento(forms.Form):
     town = forms.ModelChoiceField(   required = True, 
                                 label = "Municipio",
                                 queryset = Town.objects.filter().order_by('town'),
+                                error_messages={
+                                    "required": "No puede estar vacío",
+                                },
                                 widget = forms.Select(attrs = {
                                     "class": "form-control",
                                     }
@@ -113,23 +161,34 @@ class Empadronamiento(forms.Form):
 
     gender = forms.ChoiceField( required = True,
                                 label = "Genero",
-                                choices=(("MaleG", "M"), ("FemaleG", "F")),
+                                choices=(("","---"),("MaleG", "M"), ("FemaleG", "F")),
+                                error_messages={
+                                    "required": "No puede estar vacío",
+                                },
+                                
                                 widget = forms.Select(attrs = {
                                     "class": "form-control"
                                     }
                                 ))
 
     secQuestion1 = forms.ModelChoiceField( required = True,
-                                      label = "Pregunta de Seguridad 1",
-                                      queryset = SecurityQuestion.objects.all(),
-                                      widget = forms.Select(attrs = {
-                                          "class": "form-control"
-                                          }
-                                      ))
+                                        label = "Pregunta de Seguridad 1",
+                                        queryset = SecurityQuestion.objects.all(),
+                                        error_messages={
+                                            "required": "No puede estar vacío",
+                                        },
+                                        widget = forms.Select(attrs = {
+                                        "class": "form-control"
+                                        }
+                                    ))
 
     secAns1 = forms.CharField(  max_length = 20, 
                                 required = True, 
                                 label = "Respuesta a Pregunta de Seguridad 1",
+                                validators=[letras],
+                                error_messages={
+                                    "required": "No puede estar vacío",
+                                },
                                 widget = forms.TextInput(attrs = {
                                     "class": "form-control"
                                     }
@@ -138,6 +197,9 @@ class Empadronamiento(forms.Form):
     secQuestion2 = forms.ModelChoiceField(   required = True, 
                                         label = "Pregunta de Seguridad 2",
                                         queryset = SecurityQuestion.objects.all(),
+                                        error_messages={
+                                            "required": "No puede estar vacío",
+                                        },
                                         widget = forms.Select(attrs = {
                                             "class": "form-control"
                                             }
@@ -146,6 +208,10 @@ class Empadronamiento(forms.Form):
     secAns2 = forms.CharField(  max_length = 20, 
                                 required = True, 
                                 label = "Respuesta a Pregunta de Seguridad 2",
+                                validators=[letras],
+                                error_messages={
+                                    "required": "No puede estar vacío",
+                                },
                                 widget = forms.TextInput(attrs = {
                                     "class": "form-control"
                                     }
@@ -154,6 +220,9 @@ class Empadronamiento(forms.Form):
     secQuestion3 = forms.ModelChoiceField(   required = True, 
                                         label = "Pregunta de Seguridad 3",
                                         queryset = SecurityQuestion.objects.all(),
+                                        error_messages={
+                                            "required": "No puede estar vacío",
+                                        },
                                         widget = forms.Select(attrs = {
                                             "class": "form-control"
                                             }
@@ -162,22 +231,38 @@ class Empadronamiento(forms.Form):
     secAns3 = forms.CharField(  max_length = 20, 
                                 required = True, 
                                 label = "Respuesta a Pregunta de Seguridad 3",
+                                validators=[letras],
+                                error_messages={
+                                    "required": "No puede estar vacío",
+                                },
                                 widget = forms.TextInput(attrs = {
                                     "class": "form-control"
                                     }
                                 ))
 
-    faceImage1 = forms.ImageField(label = "Imagen Rostro Numero 1", widget=forms.FileInput(attrs={
+    faceImage1 = forms.ImageField(label = "Imagen Rostro Numero 1", 
+                                    error_messages={
+                                        "required": "No puede estar vacío",
+                                    },
+                                    widget=forms.FileInput(attrs={
                                         "class" : "form-control",
                                         "type": "file"
                                     }))
 
-    faceImage2 = forms.ImageField(label = "Imagen Rostro Numero 2", widget=forms.FileInput(attrs={
+    faceImage2 = forms.ImageField(label = "Imagen Rostro Numero 2",
+                                    error_messages={
+                                        "required": "No puede estar vacío",
+                                    },    
+                                    widget=forms.FileInput(attrs={
                                         "class" : "form-control",
                                         "type": "file"
                                     }))
 
-    faceImage3 = forms.ImageField(label = "Imagen Rostro Numero 3", widget=forms.FileInput(attrs={
+    faceImage3 = forms.ImageField(label = "Imagen Rostro Numero 3",
+                                    error_messages={
+                                        "required": "No puede estar vacío",
+                                    },    
+                                    widget=forms.FileInput(attrs={
                                         "class" : "form-control",
                                         "type": "file"
                                     }))
@@ -196,6 +281,43 @@ class Empadronamiento(forms.Form):
 
     # VALIDATIONS
 
+    def clean_cic(self):
+        cic = self.cleaned_data.get("cic")
+        for instance in Padron.objects.all():
+            if instance.cic == cic:
+                raise forms.ValidationError("El CIC " + cic + " ya esta registrada") 
+        return cic
+
+    def clean_curp(self):
+        curp = self.cleaned_data.get("curp")
+        for instance in Padron.objects.all():
+            if instance.curp == curp:
+                raise forms.ValidationError("El CURP " + curp + " ya esta registrada") 
+        return curp
+
+    def clean_postalCode(self):
+        postalCode = self.cleaned_data.get("postalCode")
+
+        if len(str(postalCode)) != 5:
+            raise forms.ValidationError("El codigo postal debe ser de 5 caracteres...")
+        
+        return postalCode
+
+    def clean_phoneNumber(self):
+        phoneNumber = self.cleaned_data.get("phoneNumber")
+        mail = self.cleaned_data.get("mail")
+        if ((phoneNumber == "") and (mail == "")):  
+            raise forms.ValidationError("Introduce al menos un metodo de contacto")  
+        return phoneNumber
+
+    def clean_mail(self):
+        phoneNumber = self.cleaned_data.get("phoneNumber")
+        mail = self.cleaned_data.get("mail")
+        if ((phoneNumber == "") and (mail == "")):  
+            raise forms.ValidationError("Introduce al menos un metodo de contacto")  
+        return mail
+
+    """
     def clean_cic(self):
         cic = self.cleaned_data.get("cic")
 
@@ -223,14 +345,7 @@ class Empadronamiento(forms.Form):
         
         return phoneNumber
     
-    
-    def clean_postalCode(self):
-        postalCode = self.cleaned_data.get("postalCode")
-
-        if len(str(postalCode)) != 5:
-            raise forms.ValidationError("El codigo postal debe ser de 5 caracteres...")
-        
-        return postalCode
+    """
     
 class VoteSheetsChecker(forms.Form):
 
@@ -398,14 +513,13 @@ class VoteSheetsCreate(forms.Form):
 
 class VoteSheetsFill(forms.Form):
 
-   candidateName = forms.CharField( required = True,
+    candidateName = forms.CharField( required = True,
                                     label = "Nombre del Candidato",
                                     widget = forms.TextInput(attrs = {
                                         "class": "form-control",
                                         "type": "text"
                                         }
-                                    )
-    )
+                                    ))
     
     candidatePseudo = forms.CharField( required = True,
                                     label = "Pseudonimo del Candidato",
@@ -415,7 +529,7 @@ class VoteSheetsFill(forms.Form):
                                         }
                                     ))
     
-   substituteCandidateName = forms.CharField( required = True,
+    substituteCandidateName = forms.CharField( required = True,
                                     label = "Nombre del Candidato Suplente",
                                     widget = forms.TextInput(attrs = {
                                         "class": "form-control",
@@ -423,7 +537,7 @@ class VoteSheetsFill(forms.Form):
                                         }
                                     ))
 
-   candidateParty = forms.ModelMultipleChoiceField( required = True,
+    candidateParty = forms.ModelMultipleChoiceField( required = True,
                                     label = "Partido Politico o Alianza",
                                     queryset= PoliticalParty.objects.all(),
                                     widget = forms.Select(attrs = {

@@ -22,7 +22,7 @@
         
         <h1 id="title">Registro de Nuevos Usuarios</h1>
 
-        <form method="POST" id="reg_form" data-towns-url="{% url 'ajax_load_towns' %}" enctype="multipart/form-data">
+        <form method="POST" id="reg_form" data-towns-url="{% url 'ajax_load_towns' %}" enctype="multipart/form-data" novalidate >
 
             {% csrf_token %}
 
@@ -30,107 +30,128 @@
 
                 <div id="form-item">
                     <label for="cic">CIC*</label>
-                    {{ form.cic }}
+                    {{ form.cic}}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.cic }}</span>
                 </div>
                 
                 <div id="form-item">
                     <label for="curp">CURP*</label>
                     {{ form.curp }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.curp }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="name">Nombre*</label>
                     {{ form.name }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.name }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="lastName">Apellido Paterno*</label>
                     {{ form.lastName }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.lastName }}</span>
                 </div>
 
                 <div id="form-item">
-                    <label for="secondLastName">Apellido Materno*</label>
+                    <label for="secondLastName">Apellido Materno</label>
                     {{ form.momLastName }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.momLastName }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="birthDate">Fecha de Nacimiento*</label>
                     {{ form.birthDate }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.birthDate }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="email">Correo Electrónico*</label>
                     {{ form.mail }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.mail }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="phoneNumber">Teléfono*</label>
                     {{ form.phoneNumber }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.phoneNumber }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="postalCode">Código Postal*</label>
                     {{ form.postalCode }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.postalCode }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="state">Estado*</label>
                     {{ form.state }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.state }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="town">Municipio*</label>
                     {{ form.town }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.town }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="gender">Genero*</label>
                     {{ form.gender }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.gender }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="secQuestion1">Pregunta de Seguridad 1*</label>
                     {{ form.secQuestion1 }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.secQuestion1 }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="secAns1">Respuesta a Pregunta de Seguridad 1*</label>
                     {{ form.secAns1 }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.secAns1 }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="secQuestion2">Pregunta de Seguridad 2*</label>
                     {{ form.secQuestion2 }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.secQuestion2 }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="secAns2">Respuesta a Pregunta de Seguridad 2*</label>
                     {{ form.secAns2 }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.secAns2 }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="secQuestion3">Pregunta de Seguridad 3*</label>
                     {{ form.secQuestion3 }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.secQuestion3 }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="secAns3">Respuesta a Pregunta de Seguridad 3*</label>
                     {{ form.secAns3 }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.secAns3 }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="faceImage1">Imagen Rostro Numero 1*</label>
                     {{ form.faceImage1 }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.faceImage1 }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="faceImage2">Imagen Rostro Numero 2*</label>
                     {{ form.faceImage2 }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.faceImage2 }}</span>
                 </div>
 
                 <div id="form-item">
                     <label for="faceImage3">Imagen Rostro Numero 3*</label>                    
                     {{ form.faceImage3 }}
+                    <span style="color: red; font-size: 10px;">{{ form.errors.faceImage3 }}</span>
                 </div>
 
                 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
