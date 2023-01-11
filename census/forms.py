@@ -521,7 +521,7 @@ class VoteSheetsFill(forms.Form):
                                         }
                                     ))
     
-    candidatePseudo = forms.CharField( required = True,
+   candidatePseudo = forms.CharField( required = True,
                                     label = "Pseudonimo del Candidato",
                                     widget = forms.TextInput(attrs = {
                                         "class": "form-control",
@@ -529,7 +529,7 @@ class VoteSheetsFill(forms.Form):
                                         }
                                     ))
     
-    substituteCandidateName = forms.CharField( required = True,
+   substituteCandidateName = forms.CharField( required = True,
                                     label = "Nombre del Candidato Suplente",
                                     widget = forms.TextInput(attrs = {
                                         "class": "form-control",

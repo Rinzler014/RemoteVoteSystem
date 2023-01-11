@@ -23,24 +23,34 @@
 
         <form method="POST" id="sheet_fill_form">
 
-            <div class="form-elements">
+            {{ formSet.management_data }}
 
-                <div id="form-item">
-                    <label for="candidateName">Nombre de la Eleccion*</label>
-                    {{ form.candidateName }}
-                </div>
+            {% csrf_token %}
 
-                <div id="form-item">
-                    <label for="substituteCandidateName">Nombre de la Eleccion*</label>
-                    {{ form.substituteCandidateName }}
-                </div>
+                {% for form in formSet %}
 
-                <div id="form-item">
-                    <label for="candidateParty">Nombre de la Eleccion*</label>
-                    {{ form.candidateParty }}
-                </div>
+                    <div class="form-elements">
 
-            </div>
+                        <div id="form-item">
+                            <label for="candidateName">Nombre del Candidato*</label>
+                            {{ form.candidateName }}
+                        </div>
+
+                        <div id="form-item">
+                            <label for="substituteCandidateName">Nombre del Suplente del Candidato*</label>
+                            {{ form.substituteCandidateName }}
+                        </div>
+
+                        <div id="form-item">
+                            <label for="candidateName">Partido Politico o Alianza*</label>
+                            {{ form.candidateParty }}
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            <input type="submit" value="Submit">
 
         </form>
 
